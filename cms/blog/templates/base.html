@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <style> a {text-decoration: none;} </style>
+    <meta charset="utf-8">
+    <title>EdYoda </title>
+    <script src="{% static 'blog/js/tinymce/tinymce.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'blog/js/tinymce/custom.js' %}" ></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100i,300,400,500,500i,600,700,900&display=swap" rel="stylesheet">
+     <link rel="stylesheet"  type="text/css" href="{%static 'blog/css/stories.css'%}"> 
+    {% block extra-head %}
+    {% endblock %} 
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <button class="button" ><a href="{% url 'home' %}">Home</a></button>
+          <form  action="{% url 'search' %}" method="GET"> 
+            <input type="text" class="search"  placeholder="Search EdYoda"  name="q" value="">
+            <input type="submit" name="submit"  value="Search" style="color:blue;  background: #0084ff;">
+          </form>
+        </ul>
+
+
+        <button class="button" ><a href="{% url 'posts' %}">Create Post</a></button>
+        {% if user.is_authenticated %}
+            <button class="button"><a href="{% url 'profile' %}" >Welcome {{ user.get_username|upper}}</a> </button> 
+            <button class="button"><a href = "{% url 'logout' %} ">Logout </a> </button>
+        {% else %}
+            <button class="button" ><a href="{% url 'login' %}">Login</a></button>
+        {% endif %}
+      </nav>        
+  </header>  
+  
+    <div  class="contact">
+      {% block content%}
+       {% endblock%}  
+       <br/><br/>
+    </div>
+    <div class="bottombar"></div>
+</body>  
+</html>

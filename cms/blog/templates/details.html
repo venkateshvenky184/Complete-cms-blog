@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends "base.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+    <div class="blog-detail-container">
+   
+      <div class="blog-card-detail">
+        <img class="blog-card-cover-detail" src="{{ post.image.url }}" alt="Getting started with Artificial Intelligence img"/>
+         <h4 class="headding-detail">{{post.title}} </h4>
+        <p class="author_name_detail"> EdYoda <span class ="date-detail"> | 08 July 2019</span></p>
+        <p class="paragraph-detail">{{post.content|safe}}</p>
+      </div>
+</div>
+{% endblock %}

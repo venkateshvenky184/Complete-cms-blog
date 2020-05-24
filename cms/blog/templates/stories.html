@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+ 
+    <div id="main-container"> 
+        <h1 class="trending_posts">Trending Posts</h1>
+
+      <p class="filter-by"><span class="filter_icon"><img src="{% static 'images/filter-icon.png'%}" alt="filter-icon"></span>Filter by Category</p>
+      <div >
+        {% for cat in categories %}
+        <button class="ui button" style="text-decoration: none;" type="button" name="button">
+          <li> <a href="{% url 'category_buttons' cat.id %}">{{cat.name|truncatechars:30|safe }} </a></p></li>
+        </button>
+        {% endfor %}
+
+      </div>
+
+      <div id="card-grid">
+        {% for post in posts %}
+        <div class="blog-card">
+          <a class="card-anchor" href="{{  post.get_absolute_url }}"> 
+          <img class="blog-card-cover" src="{{ post.image.url}}" alt="learn-artificial-intelligence_E1bep5u.jpeg"/>
+          <h4 class="blog-card-blog-title" >{{ post.title }}</h4>
+          <p class="blog-card-author"> EdYoda<span class ="blog-card-publishdate"> | 08 July 2019</span></p>
+          <p class="blog-description" >{{post.html_to_text|truncatechars:80|safe}}</p>
+          <form action="{% url 'like_post' %}" method="POST" class = "ui-form">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value = "{{post.id}}">
+            {% if user not in post.likes.all%}
+                <button type="submit"  class="button" >Like</button>
+            {% else %} 
+                <button type="submit"  class="button" >Unlike</button>
+            {% endif %}
+            <strong>{{ post.likes.all.count }} like</strong>
+          </form>
+          </a>
+         </div>
+         {% endfor %}
+      </div>   
+
+</body>    
+{% endblock %} 
